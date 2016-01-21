@@ -34,9 +34,10 @@ image_get_blob(lua_State *L)
 	if (m == NULL) {
 		return 0;
 	}
+    const char *fmt = luaL_checkstring(L, 2);
 
     cv::vector<uchar> buf;
-    cv::imencode(".png", **m, buf);
+    cv::imencode(fmt, **m, buf);
 
     luaL_buffinit(L, &b);
     luaL_addlstring(&b, (const char*) &buf[0], buf.size());
