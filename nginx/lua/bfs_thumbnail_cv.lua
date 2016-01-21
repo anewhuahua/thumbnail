@@ -1,5 +1,5 @@
-local opath, width, height, name =
-  ngx.var.opath, ngx.var.width, ngx.var.height, ngx.var.name
+local opath, width, height, name, ext =
+  ngx.var.opath, ngx.var.width, ngx.var.height, ngx.var.name, ngx.var.ext
 local host = ngx.var.host
 
 local res = ngx.location.capture(
@@ -40,4 +40,4 @@ local c = cv.load_bytes_image(
 )
 c:resize(width, height)
 -- ngx.log(ngx.ERR, "after resize\n")
-ngx.print(c:get_blob())
+ngx.print(c:get_blob("." .. ext))
