@@ -25,6 +25,21 @@ image_crop(lua_State *L)
 }
 
 
+// static int
+// image_get_blob(lua_State *L)
+// {
+//
+//     cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
+// 	if (m == NULL) {
+// 		return 0;
+// 	}
+//     // const char *fmt = luaL_checkstring(L, 2);
+//
+//     lua_pushlstring(L, (const char*) (**m).data, (**m).total() * (**m).elemSize());
+//
+//     return 1;
+// }
+
 static int
 image_get_blob(lua_State *L)
 {
