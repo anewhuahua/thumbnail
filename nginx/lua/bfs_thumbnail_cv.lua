@@ -2,6 +2,9 @@ local opath, width, height, name, ext =
   ngx.var.opath, ngx.var.width, ngx.var.height, ngx.var.name, ngx.var.ext
 local host = ngx.var.host
 
+width = tonumber(width)
+height = tonumber(height)
+
 local res = ngx.location.capture(
   opath,
   {args = ngx.req.get_uri_args()}
@@ -38,7 +41,7 @@ local c = cv.load_bytes_image(
   string.len(res.body), res.body,
   cv.load_image_anydepth
 )
-local owidth, oheight = c.size()
+local owidth, oheight = c:size()
 if owidth > width and oheight > height then
     c:resize(width, height)
     -- ngx.log(ngx.ERR, "after resize\n")
