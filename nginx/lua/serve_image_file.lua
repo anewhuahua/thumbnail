@@ -36,6 +36,7 @@ elseif way == "cv" then
     local c = cv.load_image(source_fname, cv.load_image_unchanged)
     c:resize(width, height)
     c:write(dest_fname)
+    c:close()
 else
     return_not_found()
 end

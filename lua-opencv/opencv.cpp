@@ -99,7 +99,6 @@ image_resize(lua_State *L)
     return 1;
 }
 
-
 static int
 image_write(lua_State *L)
 {
@@ -115,22 +114,6 @@ image_write(lua_State *L)
     }
 
     return 0;
-}
-
-static int
-image_write_bytes(lua_State *L)
-{
-    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
-	if (m == NULL) {
-		return 0;
-	}
-
-    std::vector<char> vec;
-    (**m).copyTo(vec);
-    // lua_pushlstring(L, reinterpret_cast<char*> (&vec[0]), vec.size());
-    lua_pushlstring(L, "hello", 5);
-
-    return 1;
 }
 
 static int
@@ -153,6 +136,7 @@ load_image(lua_State *L)
             { "get_blob", image_get_blob },
             { "write", image_write },
             { "write_bytes", image_write_bytes },
+            { "close", image_close },
 			{ NULL, NULL },
 		};
 
@@ -164,6 +148,18 @@ load_image(lua_State *L)
     lua_setmetatable(L, -2);
 
     return 1;
+}
+
+static int
+image_close(lua_State *L)
+{
+    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
+    if (M == NULL) {
+        return 0;
+    }
+    if (*m != NULL) {
+       delete *m;
+    }
 }
 
 static int
@@ -188,6 +184,7 @@ load_bytes_image(lua_State *L)
             { "get_blob", image_get_blob },
             { "write", image_write },
             { "write_bytes", image_write_bytes },
+            { "close", image_close },
 			{ NULL, NULL },
 		};
 

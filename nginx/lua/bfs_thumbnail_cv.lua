@@ -41,3 +41,4 @@ local c = cv.load_bytes_image(
 c:resize(width, height)
 -- ngx.log(ngx.ERR, "after resize\n")
 ngx.print(c:get_blob("." .. ext))
+c:close()
