@@ -79,7 +79,16 @@ image_resize(lua_State *L)
         return luaL_error(L, "Invalid flag  %d", flag);
     }
 
-    cv::Mat *dm = new cv::Mat(width, high, (*m)->type());
+    cv::Size ssize = (**m).size();
+    if (width <= 0 && high <= 0) {
+        return luaL_error(L, "both width %d, high %d are negative", width, high);
+    } else if (width <= 0) {
+        width = round((ssize.width + 0.0) / ssize.height * high);
+    } else if (high <= 0) {
+        high = round((ssize.height + 0.0) / ssize.width * width);
+    }
+
+    cv::Mat *dm = new cv::Mat(high, width, (*m)->type());  // rows, cols = =
 
     cv::resize(**m, *dm, dm->size(), 0, 0, flag);
 
@@ -209,11 +218,17 @@ extern "C" {
         lua_pushnumber(L, CV_LOAD_IMAGE_ANYDEPTH);
         lua_setfield(L,-2,"load_image_anydepth");
 
+        lua_pushnumber(L, CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_ANYCOLOR);
+        lua_setfield(L,-2,"load_image_anydepth_anycolor");
+
         lua_pushnumber(L, CV_LOAD_IMAGE_COLOR);
         lua_setfield(L,-2,"load_image_color");
 
-        lua_pushnumber(L, CV_LOAD_IMAGE_GRAYSCALE);
-        lua_setfield(L,-2,"load_image_grayscale");
+        lua_pushnumber(L, CV_LOAD_IMAGE_UNCHANGED);
+        lua_setfield(L,-2,"load_image_unchanged");
+
+        lua_pushnumber(L, CV_LOAD_IMAGE_ANYDEPTH);
+        lua_setfield(L,-2,"load_image_anydepth");
 
         lua_pushnumber(L, CV_INTER_NN);
         lua_setfield(L,-2,"inter_nearest");
