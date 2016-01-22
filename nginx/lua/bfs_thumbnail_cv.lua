@@ -38,7 +38,10 @@ local c = cv.load_bytes_image(
   string.len(res.body), res.body,
   cv.load_image_anydepth
 )
-c:resize(width, height)
--- ngx.log(ngx.ERR, "after resize\n")
+local owidth, oheight = c.size()
+if owidth > width and oheight > height then
+    c:resize(width, height)
+    -- ngx.log(ngx.ERR, "after resize\n")
+end
 ngx.print(c:get_blob("." .. ext))
 c:close()

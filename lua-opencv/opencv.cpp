@@ -100,6 +100,21 @@ image_resize(lua_State *L)
 }
 
 static int
+image_size(lua_State *L)
+{
+    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
+	if (m == NULL) {
+		return 0;
+	}
+
+    cv::Size ssize = (**m).size();
+    lua_pushnumber(L, ssize.width);
+    lua_pushnumber(L, ssize.height);
+
+    return 2;
+}
+
+static int
 image_write(lua_State *L)
 {
     cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
@@ -149,6 +164,7 @@ load_image(lua_State *L)
             { "get_blob", image_get_blob },
             { "write", image_write },
             { "close", image_close },
+            { "size", image_size },
 			{ NULL, NULL },
 		};
 
@@ -184,6 +200,7 @@ load_bytes_image(lua_State *L)
             { "get_blob", image_get_blob },
             { "write", image_write },
             { "close", image_close },
+            { "size", image_size },
 			{ NULL, NULL },
 		};
 

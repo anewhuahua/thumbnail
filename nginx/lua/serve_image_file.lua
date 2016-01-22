@@ -1,6 +1,8 @@
 local fullname, width, height, name, oext, ext, way, no_cache =
   ngx.var.fullname, ngx.var.width, ngx.var.height, ngx.var.name, ngx.var.oext, ngx.var.ext, ngx.var.way, ngx.var.nocache
 
+width = tonumber(width)
+height = tonumber(height)
 
 local images_dir = "images/" -- where images come from
 local cache_dir = "cache/" .. way .. "/" -- where images are cached
@@ -34,6 +36,12 @@ if way == "gm" then
 elseif way == "cv" then
     local cv = require("opencv")
     local c = cv.load_image(source_fname, cv.load_image_unchanged)
+    local owidth, oheight = c:size()
+    if owidth <= width or oheight <= height then
+        ngx.print(c:get_blob("." .. ext))
+        c:close()
+        ngx.exit(0)
+    end
     c:resize(width, height)
     c:write(dest_fname)
     c:close()
