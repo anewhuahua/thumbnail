@@ -117,6 +117,19 @@ image_write(lua_State *L)
 }
 
 static int
+image_close(lua_State *L)
+{
+    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
+    if (m == NULL) {
+        return 0;
+    }
+    if (*m != NULL) {
+       delete *m;
+    }
+    return 1;
+}
+
+static int
 load_image(lua_State *L)
 {
     const char *filename = luaL_checkstring(L, 1);
@@ -135,7 +148,6 @@ load_image(lua_State *L)
             { "crop", image_crop },
             { "get_blob", image_get_blob },
             { "write", image_write },
-            { "write_bytes", image_write_bytes },
             { "close", image_close },
 			{ NULL, NULL },
 		};
@@ -148,18 +160,6 @@ load_image(lua_State *L)
     lua_setmetatable(L, -2);
 
     return 1;
-}
-
-static int
-image_close(lua_State *L)
-{
-    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
-    if (M == NULL) {
-        return 0;
-    }
-    if (*m != NULL) {
-       delete *m;
-    }
 }
 
 static int
@@ -183,7 +183,6 @@ load_bytes_image(lua_State *L)
             { "crop", image_crop },
             { "get_blob", image_get_blob },
             { "write", image_write },
-            { "write_bytes", image_write_bytes },
             { "close", image_close },
 			{ NULL, NULL },
 		};
