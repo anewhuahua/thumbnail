@@ -73,7 +73,7 @@ image_resize(lua_State *L)
 
     int width = luaL_checknumber(L, 2);
     int high = luaL_checknumber(L, 3);
-    int flag = luaL_optnumber(L, 4, CV_INTER_AREA);
+    int flag = luaL_optnumber(L, 4, CV_INTER_AREA);  // LINEAR will increase nearly 100% performace but not that smooth and file will be 30% larger
 
     if (flag < CV_INTER_NN || flag > CV_INTER_LANCZOS4) {
         return luaL_error(L, "Invalid flag  %d", flag);
