@@ -73,7 +73,7 @@ image_resize(lua_State *L)
 
     int width = luaL_checknumber(L, 2);
     int high = luaL_checknumber(L, 3);
-    int flag = luaL_optnumber(L, 4, CV_INTER_LINEAR);
+    int flag = luaL_optnumber(L, 4, CV_INTER_AREA);
 
     if (flag < CV_INTER_NN || flag > CV_INTER_LANCZOS4) {
         return luaL_error(L, "Invalid flag  %d", flag);
