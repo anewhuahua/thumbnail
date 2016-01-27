@@ -1,6 +1,7 @@
-CV_LIB=-lopencv_core -lopencv_imgproc -lopencv_highgui
-LUA_LIB=-llua
+CV_LIB=-lopencv_core -lopencv_imgproc -lopencv_highgui                                                                                                                  
+LUA_LIB=-lluajit-5.1 -L/usr/local/openresty/luajit/lib
 LUA_MAC_LIB=-llua
+CFLAGS=-I/usr/local/openresty/luajit/include/luajit-2.1 --shared -Wall -fPIC -O2
 
 .PHONY: all linux mac
 
@@ -13,10 +14,11 @@ linux: opencv.so
 mac: opencv.dylib
 
 opencv.dylib : opencv.cpp
-	g++ --shared -Wall -fPIC -O2 $^ -o $@ $(CFLAG) $(LIB) $(LUA_MAC_LIB) $(CV_LIB)
+	g++  $^ -o $@ $(CFLAGS) $(LIB) $(LUA_MAC_LIB) $(CV_LIB)
 
 opencv.so : opencv.cpp
-	g++ --shared -Wall -fPIC -O2 $^ -o $@ $(CFLAG) $(LUA_LIB) $(CV_LIB) 
+	g++  $^ -o $@ $(CFLAGS) $(LUA_LIB) $(CV_LIB) 
 
 clean:
 	rm -f opencv.so opencv.dylib
+                                 
