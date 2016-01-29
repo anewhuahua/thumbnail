@@ -48,3 +48,4 @@ if owidth > width and oheight > height then
 end
 ngx.print(c:get_blob("." .. ext))
 c:close()
+c=nil
