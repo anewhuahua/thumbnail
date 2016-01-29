@@ -1,7 +1,7 @@
-CV_LIB=-lopencv_core -lopencv_imgproc -lopencv_highgui                                                                                                                  
-LUA_LIB=-lluajit-5.1 -L/usr/local/openresty/luajit/lib
+CV_LIB=-lopencv_core -lopencv_imgproc  -lopencv_highgui                                                                                                                                                                                                                                                                                                                                                                                                                                   
+LUA_LIB=-llua
 LUA_MAC_LIB=-llua
-CFLAGS=-I/usr/local/openresty/luajit/include/luajit-2.1 --shared -Wall -fPIC -O2
+CFLAGS=-I/usr/include/lua5.1/ --shared -Wall -fPIC -O2
 
 .PHONY: all linux mac
 

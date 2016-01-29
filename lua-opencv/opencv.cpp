@@ -145,8 +145,8 @@ image_close(lua_State *L)
     }
 
 
-    delete m ;
-    m = NULL;
+    //delete m ;
+    //m = NULL;
     return 1;
 }
 
@@ -238,6 +238,11 @@ load_bytes_image(lua_State *L)
     return 1;
 }
 
+static int
+close_opencv(lua_State *L) {
+    lua_close(L);
+    return 1;
+}
 
 extern "C" {
     int luaopen_opencv(lua_State *L) {
@@ -246,6 +251,7 @@ extern "C" {
         luaL_Reg l[] = {
             { "load_image", load_image },
             { "load_bytes_image", load_bytes_image },
+            { "__gc",  close_opencv },
             { NULL, NULL}
         };
 
