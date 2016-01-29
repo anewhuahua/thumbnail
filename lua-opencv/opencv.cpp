@@ -143,6 +143,8 @@ image_close(lua_State *L)
        (*m)->release();
        delete *m;
     }
+    delete m;
+    m = NULL;
     return 1;
 }
 
@@ -156,7 +158,7 @@ image_destroy(lua_State *L)
         return 0;
     }
     
-    delete m;
+    free(m);
     m = NULL;
 
     return 1;
@@ -219,7 +221,7 @@ load_bytes_image(lua_State *L)
             { "write", image_write },
             { "close", image_close },
             { "size", image_size },
-            { "__gc", image_destroy },
+            //{ "__gc", image_destroy },
 			{ NULL, NULL },
 		};
 
