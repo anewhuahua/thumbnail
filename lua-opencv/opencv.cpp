@@ -164,8 +164,7 @@ image_destroy(lua_State *L)
     m = NULL;
 
     return 1;
-}
-*/
+}*/
 
 static int
 load_image(lua_State *L)
@@ -243,8 +242,8 @@ static int
 close_opencv(lua_State *L) {
     lua_close(L);
     return 1;
-}
-*/
+}*/
+
 extern "C" {
     int luaopen_opencv(lua_State *L) {
         //  luaL_checkversion(L);
@@ -257,7 +256,7 @@ extern "C" {
         };
 
         // luaL_newlib(L, l);
-        luaL_register(L, NULL, l);
+        luaL_register(L, "opencv", l);
 
         lua_pushnumber(L, CV_LOAD_IMAGE_ANYDEPTH);
         lua_setfield(L,-2,"load_image_anydepth");
