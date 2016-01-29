@@ -143,7 +143,9 @@ image_close(lua_State *L)
        (*m)->release();
        delete *m;
     }
-    delete m;
+
+
+    delete m ;
     m = NULL;
     return 1;
 }
