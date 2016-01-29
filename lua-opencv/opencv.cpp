@@ -91,7 +91,7 @@ image_resize(lua_State *L)
     cv::Mat *dm = new cv::Mat(high, width, (*m)->type());  // rows, cols = =
 
     cv::resize(**m, *dm, dm->size(), 0, 0, flag);
-
+    (*m)->release();
     delete *m;
 
     *m = dm;
@@ -139,6 +139,7 @@ image_close(lua_State *L)
         return 0;
     }
     if (*m != NULL) {
+       (*m)->release();
        delete *m;
     }
     return 1;
@@ -207,6 +208,7 @@ load_bytes_image(lua_State *L)
 		// luaL_newlib(L,l);
 		luaL_register(L, "opencv", l);
         lua_setfield(L, -2, "__index");
+
 	}
 
     lua_setmetatable(L, -2);

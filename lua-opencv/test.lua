@@ -1,4 +1,4 @@
-package.cpath = package.cpath .. ";?.dylib"
+--package.cpath = package.cpath .. ";?.dylib"
 
 local cv  = require "opencv"
 
@@ -10,4 +10,5 @@ end
 c:resize(100, 100)
 c:write("out.png")
 c:get_blob()
+c:close()
 
