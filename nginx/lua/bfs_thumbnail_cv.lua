@@ -50,5 +50,5 @@ local cv = require("opencv")
 --c:close()
 -- c=nil
 -- ngx.log(ngx.ERR, "hua\n")
-cv.close()
+
 cv=nil
