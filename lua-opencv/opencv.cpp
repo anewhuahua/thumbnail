@@ -146,6 +146,22 @@ image_close(lua_State *L)
     return 1;
 }
 
+
+
+static int
+image_destroy(lua_State *L)
+{
+    cv::Mat **m = (cv::Mat **) lua_touserdata(L,1);
+    if (m == NULL) {
+        return 0;
+    }
+    
+    delete m;
+    m = NULL;
+
+    return 1;
+}
+
 static int
 load_image(lua_State *L)
 {
@@ -203,6 +219,7 @@ load_bytes_image(lua_State *L)
             { "write", image_write },
             { "close", image_close },
             { "size", image_size },
+            { "__gc", image_destroy },
 			{ NULL, NULL },
 		};
 
