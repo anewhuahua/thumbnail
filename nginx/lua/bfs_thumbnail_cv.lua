@@ -49,3 +49,4 @@ end
 ngx.print(c:get_blob("." .. ext))
 c:close()
 c=nil
+ngx.log(ngx.ERR, "hua\n")
