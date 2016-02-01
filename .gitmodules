@@ -1,3 +1,6 @@
-[submodule "nginx/commonlib"]
-	path = nginx/commonlib
-	url = git://git.mysociety.org/commonlib
+[submodule "module/ngx_devel_kit"]
+	path = module/ngx_devel_kit
+	url = https://github.com/simpl/ngx_devel_kit.git
+[submodule "module/lua-nginx-module"]
+	path = module/lua-nginx-module
+	url = git@github.com:openresty/lua-nginx-module.git
