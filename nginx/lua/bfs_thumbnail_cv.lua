@@ -37,18 +37,16 @@ end
 local cv = require("opencv")
 -- ngx.log(ngx.ERR, "body length is " .. string.len(res.body) .. "\n")
 -- ngx.log(ngx.ERR, "width is " .. width .. "height is " .. height .. "\n")
---local c = cv.load_bytes_image(
---  string.len(res.body), res.body,
---  cv.load_image_anydepth
---)
---local owidth, oheight = c:size()
---if owidth > width and oheight > height then
---    c:resize(width, height)
+local c = cv.load_bytes_image(
+  string.len(res.body), res.body,
+  cv.load_image_anydepth
+)
+local owidth, oheight = c:size()
+if owidth > width and oheight > height then
+    c:resize(width, height)
     -- ngx.log(ngx.ERR, "after resize\n")
---end
---ngx.print(c:get_blob("." .. ext))
---c:close()
--- c=nil
+end
+ngx.print(c:get_blob("." .. ext))
+c:close()
+c=nil
 -- ngx.log(ngx.ERR, "hua\n")
-
-cv=nil
