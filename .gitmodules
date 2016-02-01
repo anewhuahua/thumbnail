@@ -1,0 +1,3 @@
+[submodule "nginx/commonlib"]
+	path = nginx/commonlib
+	url = git://git.mysociety.org/commonlib
