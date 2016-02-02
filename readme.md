@@ -33,8 +33,8 @@ Tengine 2.1.2
       --with-http_addition_module --with-http_dav_module \   
       --with-http_gzip_static_module --with-http_perl_module \  
       --with-http_realip_module --with-http_secure_link_module \   
-      --with-http_ssl_module --add-module=/data/thumbnail/module/ngx_devel_kit \  
-      --add-module=/data/thumbnail/module/lua-nginx-module  
+      --with-http_ssl_module --add-module=/data/thumbnail/nginx/module/ngx_devel_kit \  
+      --add-module=/data/thumbnail/nginx/module/lua-nginx-module  
     $ make  
     $ make install  
 
