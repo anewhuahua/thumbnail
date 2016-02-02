@@ -30,7 +30,7 @@ Tengine/2.1.2 (nginx/1.6.2)
 
   **Build Nginx:**   
            
-    ***For Nginx 1.8.1***    
+    ===For Nginx 1.8.1===    
     $ ./configure --prefix=/usr/local/nginx --with-debug \    
       --with-http_addition_module --with-http_dav_module \   
       --with-http_gzip_static_module --with-http_perl_module \  
@@ -40,7 +40,7 @@ Tengine/2.1.2 (nginx/1.6.2)
     $ make  
     $ make install   
          
-    ***For Tengine/2.1.2 (nginx/1.6.2)***      
+    ===For Tengine/2.1.2 (nginx/1.6.2)===      
     $ ./configure --prefix=/usr/local/nginx --with-debug \    
       --with-http_addition_module --with-http_dav_module \   
       --with-http_gzip_static_module --with-http_perl_module \  
