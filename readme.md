@@ -14,8 +14,8 @@ opencv wrapper(c++ file) to call opencv library.
 Debian version 8.2  
 Lua 5.1  
 Nginx 1.8.1  
-Tengine 2.1.2  
-
+Tengine/2.1.2 (nginx/1.6.2)    
+   
 ## Build
   **Install Dependencies:**   
     $ apt-get install -y libpcre3 libpcre3-dev libltdl-dev libssl-dev libjpeg62-turbo-dev libpng12-0 libpng12-dev libcurl4-openssl-dev libmcrypt-dev autoconf libxslt1-dev libgd2-noxpm-dev libgeoip-dev libperl-dev   
@@ -28,7 +28,8 @@ Tengine 2.1.2
     $ make clean  
     $ make linux   
 
-  **Build Nginx:**          
+  **Build Nginx:**   
+    For Nginx 1.8.1
     $ ./configure --prefix=/usr/local/nginx --with-debug \    
       --with-http_addition_module --with-http_dav_module \   
       --with-http_gzip_static_module --with-http_perl_module \  
@@ -36,8 +37,16 @@ Tengine 2.1.2
       --with-http_ssl_module --add-module=/data/thumbnail/nginx/module/ngx_devel_kit \  
       --add-module=/data/thumbnail/nginx/module/lua-nginx-module  
     $ make  
-    $ make install  
-
+    $ make install   
+    For  Tengine/2.1.2 (nginx/1.6.2)
+    $ ./configure --prefix=/usr/local/nginx --with-debug \    
+      --with-http_addition_module --with-http_dav_module \   
+      --with-http_gzip_static_module --with-http_perl_module \  
+      --with-http_realip_module --with-http_secure_link_module \   
+      --with-http_ssl_module --add-module=/data/thumbnail/nginx/module/ngx_devel_kit    
+    $ make    
+    $ make install     
+      
 ## Run
   **First:**    
   Configure /data/thumbnail/nginx/nginx.conf    
