@@ -46,7 +46,7 @@ Tengine/2.1.2 (nginx/1.6.2)
       --with-http_gzip_static_module --with-http_perl_module \  
       --with-http_realip_module --with-http_secure_link_module \   
       --with-http_ssl_module --add-module=/data/thumbnail/nginx/module/ngx_devel_kit \    
-      --add-module=./modules/lua-nginx-module      
+      --add-module=./modules/ngx_http_lua_module       
     $ make    
     $ make install     
       
