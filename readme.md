@@ -24,7 +24,7 @@ Tengine/2.1.2 (nginx/1.6.2)
      
   **Build opencv Wrapper:**    
     $ git clone    
-    $ ln -s /usr/lib/x86_64-linux-gnu/liblua5.1.so /usr/lib/liblua.so
+    $ ln -s /usr/lib/x86_64-linux-gnu/liblua5.1.so /usr/lib/liblua.so  
     $ cd lua-opencv   
     $ make clean  
     $ make linux   
