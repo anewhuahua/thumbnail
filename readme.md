@@ -58,7 +58,7 @@ Tengine/2.1.2 (nginx/1.6.2)
 
 ## Benchmark
   8 CPU 2.4G, 8G RAM, Debian 8.2    
-  2406.1 fetches/sec, 9.71727e+06 bytes/sec       
+  2787.6 fetches/sec, 1.12597e+07 bytes/sec   
 
 ## Help
   curl http://XXXX:XX/lua-version   
