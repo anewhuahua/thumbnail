@@ -34,20 +34,43 @@ if res.truncated then
     return_server_error()
 end
 
+
+
 -- resize the image
 local cv = require("opencv")
+local magick = require("magick")
+
 -- ngx.log(ngx.ERR, "body length is " .. string.len(res.body) .. "\n")
 -- ngx.log(ngx.ERR, "width is " .. width .. "height is " .. height .. "\n")
-local c = cv.load_bytes_image(
-  string.len(res.body), res.body,
-  cv.load_image_anydepth
-)
-local owidth, oheight = c:size()
-if owidth > width and oheight > height then
-    c:resize(width, height)
-    -- ngx.log(ngx.ERR, "after resize\n")
+
+if string.lower(ext) == "gif" then
+  ngx.log(ngx.ERR, "hit gif\n")
+
+  local img = magick.load_image_from_blob(res.body)
+  local owidth  = img:get_width()
+  local oheight = img:get_height()
+  if owidth > width and oheight > height then
+      img:resize(width, height)
+  end
+  ngx.print(img:get_blob())
+  img=nil
+
+else
+
+  local c = cv.load_bytes_image(
+    string.len(res.body), res.body,
+    cv.load_image_anydepth
+  )
+  local owidth, oheight = c:size()
+  if owidth > width and oheight > height then
+      c:resize(width, height)
+  end
+  ngx.print(c:get_blob("." .. ext))
+  c:close()
+  c=nil
+
 end
-ngx.print(c:get_blob("." .. ext))
-c:close()
-c=nil
+
+
+
 -- ngx.log(ngx.ERR, "hua\n")
