@@ -58,16 +58,15 @@ local function gm_cmd_resize(org_pic_bob, w, h)
 end
 
 local function gm_resize(img, w, h)
-    img = magick.thumb(img, w .. "x" .. h)
+    local blob = magick.thumb(img, w .. "x" .. h)
     -- img:coalesce()
-    if not img then
+    if not blob then
         if debug then
             ngx.log(ngx.ERR, "magick.thumb failed")
         end
         return_server_error()
     end
-    ngx.print(img:get_images_blob())
-    img = nil
+    ngx.print(blob)
 end
 
 local function cv_resize(orig_pic_bob, fmt, w, h)
@@ -116,10 +115,10 @@ if not image then
     return_server_error()
 end
 local format = image:get_format()
-image = nil
 
 if format == "gif" then
-    gm_cmd_resize(res.body, width, height)
+    -- gm_cmd_resize(res.body, width, height)
+    gm_resize(image, width, height)
 else
     cv_resize(res.body, format, width, height)
 end
