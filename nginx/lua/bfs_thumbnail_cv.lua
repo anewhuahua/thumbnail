@@ -62,11 +62,11 @@ local function gm_resize(img, w, h)
     -- img:coalesce()
     if not img then
         if debug then
-            ngx.log(ngx.ERR, "magick.thumd failed")
+            ngx.log(ngx.ERR, "magick.thumb failed")
         end
         return_server_error()
     end
-    ngx.print(img:get_blob())
+    ngx.print(img:get_images_blob())
     img = nil
 end
 
