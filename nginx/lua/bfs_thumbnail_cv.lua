@@ -1,8 +1,8 @@
 local base_dir = "/data/thumbnail/www"
 local local_location_prefix = "/local"
 
-local opath, width, height, debug =
-ngx.var.opath, ngx.var.width, ngx.var.height, ngx.var.debug
+local opath, width, height, ext, debug =
+ngx.var.opath, ngx.var.width, ngx.var.height, ngx.var.ext, ngx.var.debug
 
 local function return_server_error(msg)
   ngx.status = ngx.HTTP_INTERNAL_SERVER_ERROR
@@ -33,7 +33,7 @@ local function exist_dir(path)
     return false
 end
 
-local function gm_cmd_resize(org_pic_bob, w, h)
+local function com_cmd_resize(orig_pic_bob, w, h, cmd_getter)
     local src_file = base_dir .. opath
     local dst_uri = opath .. "_" .. w .. "x" .. h
     local dst_file = base_dir .. dst_uri
@@ -44,9 +44,9 @@ local function gm_cmd_resize(org_pic_bob, w, h)
     end
     local src_f = io.open(src_file, "w")
     if not src_f then return_server_error() end
-    src_f:write(org_pic_bob)
+    src_f:write(orig_pic_bob)
     src_f:close()
-    local cmd = "gm convert -resize " .. w .. "x" .. h .. " " .. src_file .. " " .. dst_file
+    local cmd = cmd_getter(w, h, src_file, dst_file)
     local result = os.execute(cmd)
     if result ~= 0 then
         if debug then
@@ -55,6 +55,30 @@ local function gm_cmd_resize(org_pic_bob, w, h)
         return_server_error()
     end
     ngx.exec(local_location_prefix .. dst_uri)
+end
+
+local function gm_cmd_getter(w, h, src_file, dst_file)
+    local cmd = "gm convert -resize " .. w .. "x" .. h .. " " .. src_file .. " " .. dst_file
+    return cmd
+end
+
+local function gs_cmd_getter(w, h, src_file, dst_file)
+    local cmd = "gifsicle --resize " .. w .. "x" .. h .. " " .. src_file .. " --resize-method catrom -o " .. dst_file
+    return cmd
+end
+
+local function gm_cmd_resize(orig_pic_bob, w, h)
+    com_cmd_resize(orig_pic_bob, w, h, gm_cmd_getter)
+end
+
+local function gs_cmd_resize(orig_pic_bob, w, h)
+    com_cmd_resize(orig_pic_bob, w, h, gs_cmd_getter)
+end
+
+local function is_gif(orig_pic_bob)
+    -- compare whether startswith GIF87a or GIF89a
+    local cmp_str = string.sub(orig_pic_bob, 1, 6)
+    return cmp_str == "GIF87a" or cmp_str == "GIF89a"
 end
 
 local function gm_resize(img, w, h)
@@ -118,18 +142,19 @@ if res.truncated then
 end
 
 -- resize the image
-local magick = require("magick")
-local image = magick.load_image_from_blob(res.body)
-if not image then
-    return_server_error()
-end
-local format = image:get_format()
+-- local magick = require("magick")
+-- local image = magick.load_image_from_blob(res.body)
+-- if not image then
+--     return_server_error()
+-- end
+-- local format = image:get_format()
 -- image = nil
 
-if format == "gif" then
+if is_gif(res.body) then
     -- gm_cmd_resize(res.body, width, height)
-    gm_resize(image, width, height)
+    -- gm_resize(image, width, height)
+    gs_cmd_resize(res.body, width, height)
 else
-    image = nil
-    cv_resize(res.body, format, width, height)
+    if ext == "gif" then ext = "jpg" end
+    cv_resize(res.body, ext, width, height)
 end
