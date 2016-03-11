@@ -124,6 +124,10 @@ end
 width = tonumber(width)
 height = tonumber(height)
 
+if width == 0 and height == 0 then
+    return_not_found()
+end
+
 local res = ngx.location.capture(
     opath,
     {args = ngx.req.get_uri_args()}
