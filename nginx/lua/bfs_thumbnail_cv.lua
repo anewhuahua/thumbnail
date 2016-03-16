@@ -145,6 +145,8 @@ if res.truncated then
     return_server_error()
 end
 
+
+
 -- resize the image
 -- local magick = require("magick")
 -- local image = magick.load_image_from_blob(res.body)
@@ -162,3 +164,4 @@ else
     if ext == "gif" then ext = "jpg" end
     cv_resize(res.body, ext, width, height)
 end
+
